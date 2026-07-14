@@ -1,6 +1,6 @@
 {
   "name": "Vendo",
-  "description": "A premium marketplace for high-end electronics, luxury properties, premium vehicles, and jobs with a glassmorphic aesthetic.",
-  "requestFramePermissions": [],
+  "description": "A sophisticated premium marketplace for high-end electronics, luxury properties, and premium vehicles.",
+  "requestFramePermissions": ["camera", "geolocation"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

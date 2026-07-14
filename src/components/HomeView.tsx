@@ -1,256 +1,314 @@
 import React, { useState } from 'react';
-import { Search, Sparkles, TrendingUp, Cpu, Home, Car, Briefcase, ChevronRight } from 'lucide-react';
-import { Item } from '../types';
-import ItemCard from './ItemCard';
+import { 
+  Search, 
+  Laptop, 
+  Home, 
+  Car, 
+  Briefcase, 
+  ArrowRight, 
+  Heart, 
+  Clock, 
+  MapPin, 
+  Gauge, 
+  Anchor, 
+  History, 
+  ShieldCheck, 
+  Sparkles,
+  Rocket
+} from 'lucide-react';
+import { Listing } from '../types';
+import { motion } from 'motion/react';
 
 interface HomeViewProps {
-  items: Item[];
-  favorites: string[];
-  onLikeToggle: (id: string, e: React.MouseEvent) => void;
-  onSelectItem: (id: string) => void;
-  setCurrentScreen: (screen: 'home' | 'search' | 'detail' | 'dashboard') => void;
-  setSelectedCategory: (cat: 'All' | 'Electronics' | 'Property' | 'Vehicles' | 'Jobs') => void;
-  setSearchQuery: (query: string) => void;
+  listings: Listing[];
+  onToggleFavorite: (id: string) => void;
+  onSearch: (query: string) => void;
+  onCategorySelect: (category: string) => void;
+  onSelectListing: (listing: Listing) => void;
+  setView: (view: 'home' | 'search' | 'dashboard') => void;
+  onOpenAddListing: () => void;
 }
 
 export default function HomeView({
-  items,
-  favorites,
-  onLikeToggle,
-  onSelectItem,
-  setCurrentScreen,
-  setSelectedCategory,
-  setSearchQuery
+  listings,
+  onToggleFavorite,
+  onSearch,
+  onCategorySelect,
+  onSelectListing,
+  setView,
+  onOpenAddListing
 }: HomeViewProps) {
-  const [heroSearch, setHeroSearch] = useState('');
+  const [searchVal, setSearchVal] = useState('');
 
-  const handleHeroSubmit = (e: React.FormEvent) => {
+  // Get first 8 listings that are flagged as recommended or belong to other/general listings
+  const recommendedListings = listings.filter(l => l.owner !== 'user').slice(0, 8);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSearchQuery(heroSearch);
-    setCurrentScreen('search');
+    onSearch(searchVal);
+    setView('search');
   };
 
-  const handleCategorySelect = (cat: 'Electronics' | 'Property' | 'Vehicles' | 'Jobs') => {
-    setSelectedCategory(cat);
-    setCurrentScreen('search');
+  const handleChipClick = (category: string) => {
+    onCategorySelect(category);
+    setView('search');
+  };
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(price);
+  };
+
+  // Helper to map category/condition to a descriptive icon at the card footer
+  const getFooterIcon = (listing: Listing) => {
+    if (listing.location.toLowerCase().includes('nyc')) {
+      return <MapPin className="w-3.5 h-3.5 text-primary" />;
+    }
+    if (listing.location.toLowerCase().includes('miami')) {
+      return <Anchor className="w-3.5 h-3.5 text-primary" />;
+    }
+    if (listing.location.toLowerCase().includes('mi') || listing.location.toLowerCase().includes('km')) {
+      return <Gauge className="w-3.5 h-3.5 text-primary" />;
+    }
+    if (listing.condition.toLowerCase() === 'vintage') {
+      return <History className="w-3.5 h-3.5 text-primary" />;
+    }
+    if (listing.location.toLowerCase().includes('certified')) {
+      return <ShieldCheck className="w-3.5 h-3.5 text-primary" />;
+    }
+    return <Clock className="w-3.5 h-3.5 text-primary" />;
   };
 
   const categoryChips = [
-    { label: 'Electronics', value: 'Electronics' as const, icon: Cpu, color: 'border-cyan-500/20 text-cyan-400 bg-cyan-950/20' },
-    { label: 'Property', value: 'Property' as const, icon: Home, color: 'border-emerald-500/20 text-emerald-400 bg-emerald-950/20' },
-    { label: 'Vehicles', value: 'Vehicles' as const, icon: Car, color: 'border-rose-500/20 text-rose-400 bg-rose-950/20' },
-    { label: 'Jobs', value: 'Jobs' as const, icon: Briefcase, color: 'border-purple-500/20 text-purple-400 bg-purple-950/20' }
+    { name: 'Electronics', icon: Laptop },
+    { name: 'Property', icon: Home },
+    { name: 'Vehicles', icon: Car },
+    { name: 'Jobs', icon: Briefcase }
   ];
 
-  // We have 1 featured item (Lumina headphones) and we can feature other beautiful elements (skyline penthouse, model s plaid)
-  const featuredItems = items.filter(i => i.isFeatured || i.price > 10000000).slice(0, 3);
-  const recommendedItems = items.filter(i => !i.isFeatured);
-
   return (
-    <div className="space-y-16 py-6 pb-20 relative overflow-hidden" id="home-view-container">
-      {/* Background Ambience Elements */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute top-80 right-20 w-80 h-80 bg-tertiary/5 rounded-full blur-[120px] pointer-events-none"></div>
-
+    <div className="w-full pb-16">
       {/* Hero Section */}
-      <section className="text-center space-y-8 px-6 pt-10 pb-4 max-w-4xl mx-auto relative z-10">
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-1.5 bg-primary/10 border border-primary/20 text-primary text-xs uppercase font-extrabold px-3 py-1.5 rounded-full animate-bounce">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Discover Glacier-Grade Marketplace</span>
-          </div>
-          <h1 className="text-4xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-on-surface to-primary leading-tight tracking-tight">
-            Find everything you need,<br />right here.
-          </h1>
-          <p className="text-on-surface-variant max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
-            Buy, sell, and discover high-value products in our premium marketplace. 
-            Experience beautiful glassmorphic layers and instant response.
-          </p>
-        </div>
+      <section className="py-20 flex flex-col items-center text-center px-4">
+        <motion.h1 
+          initial={{ opacity: 0, translateY: 15 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-6xl font-extrabold text-on-surface mb-6 max-w-4xl leading-tight tracking-tight"
+        >
+          Find exactly what you need, <span className="text-primary bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">effortlessly.</span>
+        </motion.h1>
+        
+        <motion.p 
+          initial={{ opacity: 0, translateY: 15 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="text-base md:text-lg text-on-surface-variant max-w-2xl mb-10 opacity-90 leading-relaxed font-normal"
+        >
+          The world’s most sophisticated marketplace for high-end electronics, luxury properties, and premium vehicles.
+        </motion.p>
 
-        {/* Large Glass Search Card */}
-        <div className="glass-card p-4 sm:p-5 rounded-2xl max-w-2xl mx-auto shadow-2xl relative" id="hero-search-card">
-          <form onSubmit={handleHeroSubmit} className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/70 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="What are you looking for today?"
-                value={heroSearch}
-                onChange={(e) => setHeroSearch(e.target.value)}
-                className="w-full bg-[#111828]/50 border border-white/10 text-on-surface placeholder:text-on-surface-variant/40 rounded-xl py-3.5 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-sm"
-              />
-            </div>
-            <button
-              type="submit"
-              className="bg-primary text-on-primary font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95 transition-all text-sm cursor-pointer whitespace-nowrap"
-            >
-              Search
-            </button>
-          </form>
-        </div>
-
-        {/* Categories Grid (Chips) */}
-        <div className="space-y-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60">
-            Browse Core Categories
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {categoryChips.map((chip) => {
-              const Icon = chip.icon;
-              return (
-                <button
-                  key={chip.label}
-                  onClick={() => handleCategorySelect(chip.value)}
-                  className={`flex items-center gap-2 border px-4.5 py-2.5 rounded-xl text-sm font-semibold hover:border-primary/40 hover:bg-[#111828]/40 hover:-translate-y-0.5 transition-all cursor-pointer ${chip.color}`}
-                >
-                  <Icon className="w-4 h-4 shrink-0" />
-                  <span>{chip.label}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Curious Highlight (The headphones or top item) */}
-      <section className="px-6 w-full max-w-7xl mx-auto relative z-10">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2.5">
-            <div className="w-2.5 h-6 bg-primary rounded-full"></div>
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
-              Featured Specimen <span className="text-xs bg-tertiary/20 text-tertiary px-2 py-0.5 rounded uppercase font-bold tracking-wider">Premium Curated</span>
-            </h2>
+        {/* Hero Search Bar */}
+        <motion.form 
+          onSubmit={handleSearchSubmit}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="w-full max-w-2xl glass-card rounded-2xl p-2 flex items-center shadow-2xl mb-12 border-white/10 hover:border-primary/20 focus-within:border-primary/40 focus-within:ring-2 focus-within:ring-primary/15 transition-all duration-300"
+        >
+          <div className="flex-1 flex items-center px-3">
+            <Search className="text-primary mr-3 w-5 h-5 shrink-0" />
+            <input
+              type="text"
+              value={searchVal}
+              onChange={(e) => setSearchVal(e.target.value)}
+              placeholder="Search for electronics, property, cars..."
+              className="w-full bg-transparent border-none focus:outline-none focus:ring-0 text-on-surface py-3 placeholder:text-on-surface-variant/40 text-base"
+            />
           </div>
           <button 
-            onClick={() => { setSelectedCategory('All'); setCurrentScreen('search'); }}
-            className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-primary hover:text-white transition-colors cursor-pointer"
+            type="submit"
+            className="bg-primary hover:brightness-110 active:scale-95 text-background font-bold px-8 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-primary/10"
           >
-            <span>View All</span>
-            <ChevronRight className="w-4 h-4" />
+            Search
+          </button>
+        </motion.form>
+
+        {/* Categories Chips */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.35 }}
+          className="flex flex-wrap justify-center gap-3.5"
+        >
+          {categoryChips.map(({ name, icon: Icon }) => (
+            <button
+              key={name}
+              onClick={() => handleChipClick(name)}
+              className="flex items-center gap-2 px-5 py-3 rounded-full glass-card hover:bg-primary/10 hover:border-primary/30 text-on-surface hover:text-primary transition-all duration-300 group active:scale-95 text-sm font-semibold select-none border border-white/5"
+            >
+              <Icon className="w-4 h-4 text-on-surface-variant group-hover:text-primary transition-colors" />
+              <span>{name}</span>
+            </button>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* Fresh Recommendations Section */}
+      <section className="py-8 px-4 max-w-7xl mx-auto">
+        <div className="flex items-end justify-between mb-8">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-black text-on-surface mb-2 tracking-tight">
+              Fresh Recommendations
+            </h2>
+            <p className="text-sm md:text-base text-on-surface-variant/80">
+              Based on your recent interests and trending items.
+            </p>
+          </div>
+          <button 
+            onClick={() => {
+              onCategorySelect('All');
+              setView('search');
+            }}
+            className="text-sm font-semibold text-primary flex items-center gap-1.5 hover:underline group"
+          >
+            <span>View all</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
 
-        {/* Featured Showcase Item Row / Special Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Main Huge Premium Card */}
-          <div 
-            onClick={() => onSelectItem('lumina-headphones')}
-            className="lg:col-span-8 glass-card hover:glass-card-elevated rounded-3xl p-5 sm:p-8 flex flex-col md:flex-row gap-6 sm:gap-8 items-center cursor-pointer transition-all duration-500 group relative overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none"></div>
-            
-            {/* Left Image */}
-            <div className="w-full md:w-1/2 aspect-video md:aspect-square rounded-2xl overflow-hidden bg-slate-900 border border-white/5 relative shrink-0">
-              <img 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxL7g76EDx1b83ecenZc1cZ0Qd85bnVa9zX8RiHH81C6m6-7h6BnlkPaNRzX0-rfaW0A9sdRgfjCxo9AecGaADYD2TmX1hpZtDgb7XNrI5-6u02VlAifOVXNv2QTCdo4dCGRMkUb0d6lQ6fHoS2tQMUBf-0SO75pwFnAYh_hpaMkqpC1Cz5NesvMaENzdvcPVKBrCvAav7zxPL_9eJoCdok8uIuPMSs43nTPS4FQMBx3vlTjOYau9f6Q" 
-                alt="Lumina Headphones" 
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <span className="absolute top-3 left-3 text-[10px] uppercase tracking-wider font-extrabold bg-[#0a0e1a]/80 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-lg text-primary shadow-lg">
-                Exclusive Deal
-              </span>
-            </div>
+        {/* Listings Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {recommendedListings.map((listing, index) => (
+            <motion.div
+              key={listing.id}
+              initial={{ opacity: 0, translateY: 20 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              onClick={() => onSelectListing(listing)}
+              className="glass-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer border border-white/5 hover:border-primary/25 hover:shadow-[0_12px_40px_rgba(0,180,255,0.08)] transition-all duration-300"
+            >
+              <div className="relative h-56 overflow-hidden bg-slate-900/40">
+                <img
+                  alt={listing.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  src={listing.image}
+                  loading="lazy"
+                />
+                
+                {/* Favorite Action Button */}
+                <div className="absolute top-3 right-3 z-10">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleFavorite(listing.id);
+                    }}
+                    className={`w-9 h-9 rounded-full ${
+                      listing.isFavorite 
+                        ? 'bg-primary text-background' 
+                        : 'bg-surface/80 text-on-surface hover:text-primary hover:bg-surface'
+                    } backdrop-blur-md flex items-center justify-center transition-all duration-200 shadow-md active:scale-90`}
+                  >
+                    <Heart className={`w-4 h-4 ${listing.isFavorite ? 'fill-current' : ''}`} />
+                  </button>
+                </div>
 
-            {/* Right Information */}
-            <div className="flex-1 space-y-4 text-left w-full">
-              <div className="space-y-2">
-                <span className="text-xs font-bold text-tertiary uppercase tracking-widest">Electronics • Pristine</span>
-                <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-primary transition-colors leading-snug">
-                  Lumina X-1000 Reference Audio Headphones
+                {/* Optional Status Label (e.g. New) */}
+                {listing.id === 'rec-1' && (
+                  <div className="absolute bottom-3 left-3 bg-primary text-background text-[10px] uppercase font-black px-3 py-1 rounded-full shadow-lg">
+                    New
+                  </div>
+                )}
+              </div>
+
+              {/* Card Body */}
+              <div className="p-5 flex flex-col flex-1">
+                <h3 className="text-base font-bold text-on-surface mb-1.5 truncate group-hover:text-primary transition-colors">
+                  {listing.title}
                 </h3>
-                <p className="text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
-                  Experience acoustic purity through proprietary beryllium driver technology. Open back soundstage for unmatched auditory dimensions. High performance audio hardware crafted with premium materials.
+                <p className="text-xs text-on-surface-variant/80 mb-4 line-clamp-2 leading-relaxed">
+                  {listing.description || 'Pristine condition premium quality item.'}
                 </p>
+                
+                {/* Price and Metadata Footer */}
+                <div className="mt-auto flex items-center justify-between pt-2 border-t border-white/5">
+                  <span className="text-lg font-black text-primary tracking-tight">
+                    {formatPrice(listing.price)}
+                  </span>
+                  
+                  <span className="text-xs text-on-surface-variant/60 flex items-center gap-1">
+                    {getFooterIcon(listing)}
+                    <span>{listing.location}</span>
+                  </span>
+                </div>
               </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-black text-white">₹1,07,000</span>
-                <span className="text-xs text-on-surface-variant">Brooklyn, NY</span>
-              </div>
-
-              <button className="flex items-center gap-2 text-xs font-bold bg-white/5 border border-white/10 group-hover:border-primary/30 text-on-surface rounded-xl px-5 py-3 transition-all cursor-pointer">
-                <span>Inspect Specimen</span>
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      {/* High-Impact CTA Section */}
+      <section className="py-12 px-4 max-w-7xl mx-auto">
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-primary-container via-primary/80 to-blue-600 p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl border border-white/10">
+          
+          {/* Luminous dynamic background blur */}
+          <div className="absolute -top-12 -right-12 w-80 h-80 bg-white/10 rounded-full blur-[100px] pointer-events-none"></div>
+          
+          <div className="relative z-10 max-w-xl text-center lg:text-left">
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight tracking-tight">
+              Turn your premium items into liquid capital.
+            </h2>
+            <p className="text-sm md:text-base text-sky-100 mb-8 opacity-90 leading-relaxed">
+              Join 50k+ sellers who trust Vendo for its fast, high-end, and secure transaction ecosystem. Complete lists in minutes.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+              <button 
+                onClick={onOpenAddListing}
+                className="w-full sm:w-auto bg-white text-primary font-extrabold px-8 py-3.5 rounded-xl hover:brightness-95 active:scale-95 transition-all duration-200 shadow-xl"
+              >
+                List Your First Item
+              </button>
+              <button 
+                onClick={() => alert("How it works:\n\n1. Take beautiful photos of your high-end items.\n2. Tap 'Sell' to list them on Vendo's premium marketplace.\n3. Communicate with verified buyers in our chat panel.\n4. Close the deal securely with full confidence.")}
+                className="w-full sm:w-auto border border-white/30 text-white font-bold px-8 py-3.5 rounded-xl hover:bg-white/10 active:scale-95 transition-all duration-200"
+              >
+                How it works
               </button>
             </div>
           </div>
 
-          {/* Secondary Featured List Sidebar */}
-          <div className="lg:col-span-4 flex flex-col gap-4">
-            {featuredItems.slice(1, 3).map((item) => (
-              <div 
-                key={item.id}
-                onClick={() => onSelectItem(item.id)}
-                className="glass-card hover:glass-card-elevated p-4 rounded-2xl flex gap-4 cursor-pointer transition-all duration-300 group"
-              >
-                <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-900 border border-white/5 shrink-0 relative">
-                  <img 
-                    src={item.imageUrl} 
-                    alt={item.title} 
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
+          {/* Floating graphic element */}
+          <div className="relative z-10 w-full max-w-xs md:max-w-sm hidden lg:block">
+            <motion.div 
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              className="glass-card p-6 rounded-2xl border border-white/20 shadow-2xl rotate-2 translate-x-4 bg-slate-950/40"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/20">
+                  <Rocket className="text-primary w-5 h-5" />
                 </div>
-                <div className="flex-1 flex flex-col justify-between text-left">
-                  <div className="space-y-0.5">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{item.category}</span>
-                    <h4 className="font-semibold text-on-surface text-sm line-clamp-1 group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h4>
-                  </div>
-                  <div className="flex items-baseline justify-between">
-                    <span className="font-extrabold text-white text-sm">{item.priceFormatted}</span>
-                    <span className="text-[10px] text-on-surface-variant">{item.location}</span>
-                  </div>
+                <div>
+                  <p className="text-sm font-bold text-on-surface">Selling Speed</p>
+                  <p className="text-xs text-on-surface-variant">3x faster than average</p>
                 </div>
               </div>
-            ))}
-            
-            {/* Help / Tip glass widget */}
-            <div className="glass-card p-4 rounded-2xl text-left flex gap-3 border-dashed border-primary/20 items-center">
-              <span className="text-2xl">💡</span>
-              <div className="space-y-0.5">
-                <h5 className="text-xs font-bold text-white">Interactive Messages</h5>
-                <p className="text-[11px] text-on-surface-variant leading-relaxed">
-                  Go to the **Dashboard** messages section to chat directly with active buyers or sellers in real-time!
-                </p>
+
+              <div className="space-y-2">
+                <div className="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+                  <div className="h-full bg-primary w-[85%] rounded-full shadow-[0_0_12px_rgba(0,180,255,0.7)]"></div>
+                </div>
+                <div className="flex justify-between text-[11px] font-semibold text-on-surface-variant/80">
+                  <span>High Interest</span>
+                  <span className="text-primary">85% Match</span>
+                </div>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* Fresh Recommendations Grid */}
-      <section className="px-6 w-full max-w-7xl mx-auto relative z-10">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2.5">
-            <div className="w-2.5 h-6 bg-tertiary rounded-full"></div>
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
-              Fresh Recommendations <TrendingUp className="w-5 h-5 text-tertiary animate-pulse" />
-            </h2>
-          </div>
-          <button 
-            onClick={() => { setSelectedCategory('All'); setCurrentScreen('search'); }}
-            className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-tertiary hover:text-white transition-colors cursor-pointer"
-          >
-            <span>Explore All</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Catalog grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="recommendations-grid">
-          {recommendedItems.map((item) => (
-            <ItemCard 
-              key={item.id}
-              item={item}
-              isLiked={favorites.includes(item.id)}
-              onLikeToggle={onLikeToggle}
-              onClick={() => onSelectItem(item.id)}
-            />
-          ))}
         </div>
       </section>
     </div>

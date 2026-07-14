@@ -1,47 +1,43 @@
-export interface Seller {
-  name: string;
-  avatar: string;
-  joinedDate: string;
-  rating: number;
-  reviewsCount: number;
-  isVerified?: boolean;
-}
-
-export interface Item {
+export interface Listing {
   id: string;
   title: string;
-  price: number; // For sorting and comparisons
-  priceFormatted: string; // E.g. "₹2,90,000"
-  location: string;
-  timeAgo: string;
+  price: number;
   category: 'Electronics' | 'Property' | 'Vehicles' | 'Jobs';
-  imageUrl: string;
-  description: string;
-  specs: Record<string, string>;
-  seller: Seller;
-  condition: 'New' | 'Refurbished' | 'Used';
-  likesCount: number;
-  viewsCount: string;
-  status: 'active' | 'pending' | 'sold';
-  isFeatured?: boolean;
-  isNewTag?: boolean;
-}
-
-export interface ChatMessage {
-  sender: 'user' | 'seller';
-  text: string;
+  condition: 'New' | 'Pending' | 'Refurbished' | 'Used' | 'Vintage' | 'Active';
+  location: string;
   time: string;
+  image: string;
+  views?: string;
+  isFavorite: boolean;
+  description?: string;
+  tags?: string[];
+  status?: 'active' | 'pending' | 'sold';
+  owner?: 'user' | 'other';
+  companyName?: string;
+  jobType?: 'Full-time' | 'Part-time' | 'Contract' | 'Remote';
+  jobRequirements?: string;
+  images?: string[];
+  videoUrl?: string;
+  latitude?: number;
+  longitude?: number;
+  showCoordinates?: boolean;
 }
 
-export interface MessageThread {
+export interface Message {
   id: string;
-  senderName: string;
-  senderAvatar: string;
-  content: string;
-  timestamp: string;
-  isOnline: boolean;
+  sender: string;
+  avatar: string;
+  time: string;
+  message: string;
   unread: boolean;
-  chats: ChatMessage[];
-  itemId?: string;
-  itemTitle?: string;
+  active?: boolean;
+}
+
+export interface FilterState {
+  searchQuery: string;
+  category: string; // 'All' or specific category
+  priceMin: string;
+  priceMax: string;
+  condition: 'Any' | 'New' | 'Refurbished' | 'Used';
+  location: string;
 }
