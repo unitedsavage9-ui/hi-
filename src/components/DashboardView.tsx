@@ -289,7 +289,7 @@ export default function DashboardView({
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left ${
                   activeTab === 'listings'
                     ? 'bg-primary/10 text-primary border border-primary/20 font-bold'
-                    : 'text-on-surface-variant hover:bg-white/5 border border-transparent'
+                    : 'text-on-surface-variant hover:bg-surface-container border border-transparent'
                 }`}
               >
                 <List className="w-4.5 h-4.5" />
@@ -301,7 +301,7 @@ export default function DashboardView({
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left ${
                   activeTab === 'messages'
                     ? 'bg-primary/10 text-primary border border-primary/20 font-bold'
-                    : 'text-on-surface-variant hover:bg-white/5 border border-transparent'
+                    : 'text-on-surface-variant hover:bg-surface-container border border-transparent'
                 }`}
               >
                 <MessageSquare className="w-4.5 h-4.5" />
@@ -316,7 +316,7 @@ export default function DashboardView({
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left ${
                   activeTab === 'favorites'
                     ? 'bg-primary/10 text-primary border border-primary/20 font-bold'
-                    : 'text-on-surface-variant hover:bg-white/5 border border-transparent'
+                    : 'text-on-surface-variant hover:bg-surface-container border border-transparent'
                 }`}
               >
                 <Heart className="w-4.5 h-4.5" />
@@ -333,7 +333,7 @@ export default function DashboardView({
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-left ${
                   activeTab === 'settings'
                     ? 'bg-primary/10 text-primary border border-primary/20 font-bold'
-                    : 'text-on-surface-variant hover:bg-white/5 border border-transparent'
+                    : 'text-on-surface-variant hover:bg-surface-container border border-transparent'
                 }`}
               >
                 <Settings className="w-4.5 h-4.5" />
@@ -343,7 +343,7 @@ export default function DashboardView({
           </div>
 
           {/* Premium Badge at Bottom of Sidebar */}
-          <div className="mt-auto p-5 glass-card rounded-2xl border border-white/5 bg-[#0f1524]/20 mx-4 md:mx-0">
+          <div className="mt-auto p-5 glass-card rounded-2xl border border-outline-variant bg-surface-container/30 mx-4 md:mx-0">
             <p className="text-xs font-bold text-primary/90 uppercase tracking-wider">
               Premium Member
             </p>
@@ -425,7 +425,7 @@ export default function DashboardView({
                     <h2 className="text-xl font-black text-on-surface tracking-tight">
                       My Active Listings
                     </h2>
-                    <span className="text-xs text-on-surface-variant bg-white/5 border border-white/5 px-2.5 py-1 rounded-full font-semibold">
+                    <span className="text-xs text-on-surface-variant bg-surface-container border border-outline-variant px-2.5 py-1 rounded-full font-semibold">
                       {userListings.length} Total
                     </span>
                   </div>
@@ -436,11 +436,11 @@ export default function DashboardView({
                       <div
                         key={item.id}
                         onClick={() => onSelectListing(item)}
-                        className={`glass-card rounded-2xl overflow-hidden group hover:shadow-[0_15px_40px_rgba(0,0,0,0.4)] border border-white/5 hover:border-primary/20 transition-all duration-300 cursor-pointer flex flex-col ${
+                        className={`glass-card rounded-2xl overflow-hidden group hover:shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-outline-variant hover:border-primary/20 transition-all duration-300 cursor-pointer flex flex-col ${
                           item.status === 'sold' ? 'opacity-70 hover:opacity-100' : ''
                         }`}
                       >
-                        <div className="relative h-48 overflow-hidden bg-slate-900/40">
+                        <div className="relative h-48 overflow-hidden bg-slate-100">
                           <img
                             src={item.image}
                             alt={item.title}
@@ -448,19 +448,19 @@ export default function DashboardView({
                               item.status === 'sold' ? 'grayscale opacity-40' : ''
                             }`}
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a]/80 via-transparent to-transparent"></div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                           
                           <div className="absolute top-3 right-3">
                             {getStatusBadge(item.status)}
                           </div>
                         </div>
 
-                        <div className="p-5 flex flex-col flex-1 relative bg-[#0f1524]/20">
+                        <div className="p-5 flex flex-col flex-1 relative bg-surface-container/10">
                           <h4 className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors truncate">
                             {item.title}
                           </h4>
                           
-                          <div className="flex justify-between items-center mt-3 pt-2 border-t border-white/5">
+                          <div className="flex justify-between items-center mt-3 pt-2 border-t border-outline-variant/40">
                             <span className="text-base font-black text-primary">
                               {formatPrice(item.price)}
                             </span>
@@ -470,7 +470,7 @@ export default function DashboardView({
                           </div>
 
                           {/* Quick Admin Actions */}
-                          <div className="mt-4 flex items-center justify-end gap-2 border-t border-white/5 pt-3">
+                          <div className="mt-4 flex items-center justify-end gap-2 border-t border-outline-variant/40 pt-3">
                             {item.status !== 'sold' && (
                               <button
                                 onClick={(e) => {
@@ -533,7 +533,7 @@ export default function DashboardView({
                       </button>
                     </div>
 
-                    <div className="glass-card rounded-2xl overflow-hidden divide-y divide-white/5 bg-[#0f1524]/10 border border-white/5">
+                    <div className="glass-card rounded-2xl overflow-hidden divide-y divide-outline-variant/40 bg-surface-container/30 border border-outline-variant/60">
                       {conversations.slice(0, 3).map((conv) => (
                         <div
                           key={conv.id}
@@ -541,14 +541,14 @@ export default function DashboardView({
                             setActiveChatId(conv.id);
                             setActiveTab('messages');
                           }}
-                          className="p-4 hover:bg-white/5 transition-colors cursor-pointer group flex items-start gap-3"
+                          className="p-4 hover:bg-outline-variant/30 transition-colors cursor-pointer group flex items-start gap-3"
                         >
                           <div className="relative shrink-0">
-                            <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 ring-2 ring-primary/5">
+                            <div className="w-10 h-10 rounded-full overflow-hidden border border-outline-variant ring-2 ring-primary/5">
                               <img src={conv.avatar} alt={conv.sender} className="w-full h-full object-cover" />
                             </div>
                             {conv.unread && (
-                              <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#0a0e1a] rounded-full shadow-[0_0_5px_#22c55e]"></span>
+                              <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-background rounded-full shadow-[0_0_5px_#22c55e]"></span>
                             )}
                           </div>
 
@@ -568,7 +568,7 @@ export default function DashboardView({
 
                       <button 
                         onClick={() => setActiveTab('messages')}
-                        className="w-full py-3 text-xs font-bold text-primary bg-primary/5 hover:bg-primary/15 transition-all text-center border-t border-white/5"
+                        className="w-full py-3 text-xs font-bold text-primary bg-primary/5 hover:bg-primary/15 transition-all text-center border-t border-outline-variant/40"
                       >
                         Open Message Center
                       </button>
@@ -613,11 +613,11 @@ export default function DashboardView({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl flex flex-col lg:flex-row h-[550px] bg-[#0f1524]/30"
+                className="glass-card rounded-2xl overflow-hidden border border-outline-variant/80 shadow-xl flex flex-col lg:flex-row h-[550px] bg-white/95"
               >
                 {/* Chat users selection sidebar (Left pane) */}
-                <div className="w-full lg:w-80 border-r border-white/5 flex flex-col h-full bg-[#0a0e1a]/20">
-                  <div className="p-4 border-b border-white/5">
+                <div className="w-full lg:w-80 border-r border-outline-variant flex flex-col h-full bg-surface-container/20">
+                  <div className="p-4 border-b border-outline-variant/50">
                     <h3 className="text-sm font-black text-on-surface">Inbox conversations</h3>
                     <p className="text-[11px] text-on-surface-variant">Click to respond instantly</p>
                   </div>
@@ -633,12 +633,12 @@ export default function DashboardView({
                             // Mark read
                             setConversations(prev => prev.map(c => c.id === conv.id ? { ...c, unread: false } : c));
                           }}
-                          className={`p-4 hover:bg-white/5 transition-all cursor-pointer flex items-start gap-3 border-b border-white/5/30 ${
+                          className={`p-4 hover:bg-outline-variant/30 transition-all cursor-pointer flex items-start gap-3 border-b border-outline-variant/30 ${
                             isActive ? 'bg-primary/5 border-l-4 border-l-primary' : ''
                           }`}
                         >
                           <div className="relative shrink-0">
-                            <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10">
+                            <div className="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/60">
                               <img src={conv.avatar} alt={conv.sender} className="w-full h-full object-cover" />
                             </div>
                             {conv.unread && (
@@ -668,14 +668,14 @@ export default function DashboardView({
                   {activeConversation ? (
                     <>
                       {/* Active conversation Header */}
-                      <div className="p-4 border-b border-white/5 flex items-center justify-between bg-surface-container/20">
+                      <div className="p-4 border-b border-outline-variant flex items-center justify-between bg-surface-container/20">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full overflow-hidden border border-primary/20">
+                          <div className="w-10 h-10 rounded-full overflow-hidden border border-primary/25">
                             <img src={activeConversation.avatar} alt={activeConversation.sender} className="w-full h-full object-cover" />
                           </div>
                           <div>
                             <h4 className="text-sm font-bold text-on-surface">{activeConversation.sender}</h4>
-                            <p className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
+                            <p className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
                               <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full inline-block"></span>
                               <span>Active negotiator</span>
                             </p>
@@ -702,7 +702,7 @@ export default function DashboardView({
                                 className={`max-w-[70%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                                   isMe
                                     ? 'bg-primary text-background font-medium rounded-tr-none'
-                                    : 'bg-surface-container-high/60 backdrop-blur border border-white/5 text-on-surface rounded-tl-none'
+                                    : 'bg-surface-container-high/60 backdrop-blur border border-outline-variant/60 text-on-surface rounded-tl-none'
                                 }`}
                               >
                                 <p>{m.text}</p>
@@ -720,14 +720,14 @@ export default function DashboardView({
                       {/* Chat interactive replies box */}
                       <form
                         onSubmit={handleSendReply}
-                        className="p-4 border-t border-white/5 flex items-center gap-3 bg-[#0f1524]/40"
+                        className="p-4 border-t border-outline-variant/50 flex items-center gap-3 bg-surface-container/40"
                       >
                         <input
                           type="text"
                           value={replyText}
                           onChange={(e) => setReplyText(e.target.value)}
                           placeholder={`Reply to ${activeConversation.sender}...`}
-                          className="flex-1 bg-[#0a0e1a]/60 border border-outline-variant/50 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all placeholder:text-on-surface-variant/30"
+                          className="flex-1 bg-surface-container/60 border border-outline-variant/50 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all placeholder:text-on-surface-variant/30"
                         />
                         <button
                           type="submit"
@@ -759,13 +759,13 @@ export default function DashboardView({
                   <h2 className="text-xl font-black text-on-surface tracking-tight">
                     My Favorites
                   </h2>
-                  <span className="text-xs text-on-surface-variant bg-white/5 border border-white/5 px-2.5 py-1 rounded-full font-semibold">
+                  <span className="text-xs text-on-surface-variant bg-surface-container border border-outline-variant px-2.5 py-1 rounded-full font-semibold">
                     {favoritedListings.length} Saved Items
                   </span>
                 </div>
 
                 {favoritedListings.length === 0 ? (
-                  <div className="glass-card p-12 rounded-2xl text-center border border-white/5 max-w-md mx-auto">
+                  <div className="glass-card p-12 rounded-2xl text-center border border-outline-variant/60 max-w-md mx-auto">
                     <Heart className="w-10 h-10 text-primary/40 mx-auto mb-4" />
                     <p className="text-base font-bold text-on-surface mb-2">Your Favorites list is empty</p>
                     <p className="text-xs text-on-surface-variant/80 mb-6">
@@ -778,9 +778,9 @@ export default function DashboardView({
                       <div
                         key={item.id}
                         onClick={() => onSelectListing(item)}
-                        className="glass-card rounded-2xl overflow-hidden p-1.5 border border-white/5 hover:border-primary/20 hover:scale-[1.01] transition-all duration-300 cursor-pointer flex flex-col"
+                        className="glass-card rounded-2xl overflow-hidden p-1.5 border border-outline-variant/60 hover:border-primary/20 hover:scale-[1.01] transition-all duration-300 cursor-pointer flex flex-col"
                       >
-                        <div className="relative h-44 rounded-xl overflow-hidden">
+                        <div className="relative h-44 rounded-xl overflow-hidden bg-slate-100">
                           <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                           <button
                             onClick={(e) => {
@@ -797,7 +797,7 @@ export default function DashboardView({
                           <h4 className="font-bold text-sm text-on-surface line-clamp-1">{item.title}</h4>
                           <p className="text-xs text-on-surface-variant mt-1">{item.location}</p>
                           
-                          <div className="flex justify-between items-center mt-4 pt-3 border-t border-white/5">
+                          <div className="flex justify-between items-center mt-4 pt-3 border-t border-outline-variant/40">
                             <span className="text-primary font-bold text-sm">
                               {formatPrice(item.price)}
                             </span>
@@ -826,16 +826,16 @@ export default function DashboardView({
                   Account Settings
                 </h2>
 
-                <div className="glass-card p-6 rounded-2xl border border-white/10 space-y-6">
+                <div className="glass-card p-6 rounded-2xl border border-outline-variant/60 space-y-6">
                   {/* Avatar Selector */}
                   <div className="space-y-4">
-                    <div className="flex flex-col md:flex-row items-center gap-6 p-4 bg-white/5 border border-white/5 rounded-2xl">
+                    <div className="flex flex-col md:flex-row items-center gap-6 p-4 bg-surface-container border border-outline-variant/50 rounded-2xl">
                       {/* Avatar Live Display */}
                       <div className="relative group shrink-0">
                         <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-primary/60 ring-4 ring-primary/10 shadow-lg">
                           <img src={selectedAvatarUrl} alt="Profile Avatar" className="w-full h-full object-cover" />
                         </div>
-                        <div className="absolute -bottom-1 -right-1 bg-primary text-background p-1.5 rounded-full shadow border border-[#0a0e1a]">
+                        <div className="absolute -bottom-1 -right-1 bg-primary text-background p-1.5 rounded-full shadow border border-background">
                           <Camera className="w-4 h-4" />
                         </div>
                       </div>
@@ -870,7 +870,7 @@ export default function DashboardView({
                             />
                             <button
                               type="button"
-                              className="py-2 px-3.5 rounded-xl bg-white/5 border border-white/10 text-xs text-on-surface hover:bg-white/10 font-bold transition-all flex items-center gap-2"
+                              className="py-2 px-3.5 rounded-xl bg-surface-container border border-outline-variant text-xs text-on-surface hover:bg-outline-variant/40 font-bold transition-all flex items-center gap-2"
                             >
                               <Upload className="w-3.5 h-3.5 text-primary" />
                               <span>Upload Photo</span>
@@ -885,9 +885,9 @@ export default function DashboardView({
                       <motion.div 
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="bg-[#0a0e1a] rounded-2xl border border-primary/25 p-4 space-y-3"
+                        className="bg-slate-900 rounded-2xl border border-primary/25 p-4 space-y-3"
                       >
-                        <div className="relative w-full max-w-sm mx-auto h-56 rounded-xl overflow-hidden bg-black border border-white/5">
+                        <div className="relative w-full max-w-sm mx-auto h-56 rounded-xl overflow-hidden bg-black border border-outline-variant/30">
                           <video 
                             ref={profileVideoRef} 
                             autoPlay 
@@ -920,7 +920,7 @@ export default function DashboardView({
                       <motion.div 
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-[#0a0e1a]/80 backdrop-blur-md rounded-2xl border border-primary/20 p-5 space-y-5"
+                        className="bg-surface-container border border-outline-variant rounded-2xl p-5 space-y-5"
                       >
                         <div className="text-center">
                           <h5 className="text-xs font-bold text-primary uppercase tracking-widest flex items-center justify-center gap-1.5">
@@ -934,7 +934,7 @@ export default function DashboardView({
 
                         {/* Interactive Circle Cutout Viewport */}
                         <div className="flex justify-center py-2">
-                          <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_0_20px_rgba(0,180,255,0.15)] bg-slate-900 flex items-center justify-center">
+                          <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_2px_15px_rgba(0,112,243,0.15)] bg-slate-100 flex items-center justify-center">
                             <img
                               src={rawProfilePhoto}
                               alt="Raw Upload"
@@ -947,7 +947,7 @@ export default function DashboardView({
                               }}
                             />
                             {/* Visual center helper overlay */}
-                            <div className="absolute inset-0 border border-white/5 pointer-events-none rounded-full" />
+                            <div className="absolute inset-0 border border-outline-variant/30 pointer-events-none rounded-full" />
                           </div>
                         </div>
 
@@ -966,7 +966,7 @@ export default function DashboardView({
                               step="0.1"
                               value={cropZoom}
                               onChange={(e) => setCropZoom(parseFloat(e.target.value))}
-                              className="w-full accent-primary bg-white/5 h-1 rounded-lg cursor-pointer"
+                              className="w-full accent-primary bg-outline-variant/50 h-1 rounded-lg cursor-pointer"
                             />
                           </div>
 
@@ -983,7 +983,7 @@ export default function DashboardView({
                               step="5"
                               value={cropRotation}
                               onChange={(e) => setCropRotation(parseInt(e.target.value))}
-                              className="w-full accent-primary bg-white/5 h-1 rounded-lg cursor-pointer"
+                              className="w-full accent-primary bg-outline-variant/50 h-1 rounded-lg cursor-pointer"
                             />
                           </div>
 
@@ -1000,7 +1000,7 @@ export default function DashboardView({
                               step="2"
                               value={cropX}
                               onChange={(e) => setCropX(parseInt(e.target.value))}
-                              className="w-full accent-primary bg-white/5 h-1 rounded-lg cursor-pointer"
+                              className="w-full accent-primary bg-outline-variant/50 h-1 rounded-lg cursor-pointer"
                             />
                           </div>
 
@@ -1017,7 +1017,7 @@ export default function DashboardView({
                               step="2"
                               value={cropY}
                               onChange={(e) => setCropY(parseInt(e.target.value))}
-                              className="w-full accent-primary bg-white/5 h-1 rounded-lg cursor-pointer"
+                              className="w-full accent-primary bg-outline-variant/50 h-1 rounded-lg cursor-pointer"
                             />
                           </div>
                         </div>
@@ -1035,7 +1035,7 @@ export default function DashboardView({
                           <button
                             type="button"
                             onClick={() => setRawProfilePhoto(null)}
-                            className="bg-white/5 hover:bg-white/10 text-on-surface font-bold text-xs px-4 py-2 rounded-xl cursor-pointer"
+                            className="bg-surface-container-high hover:bg-outline-variant/50 text-on-surface font-bold text-xs px-4 py-2 rounded-xl cursor-pointer"
                           >
                             Discard
                           </button>
@@ -1064,7 +1064,7 @@ export default function DashboardView({
                               type="button"
                               onClick={() => setSelectedAvatarUrl(preset.url)}
                               className={`w-11 h-11 rounded-full overflow-hidden border-2 shrink-0 transition-all ${
-                                isSelected ? 'border-primary ring-2 ring-primary/20 scale-105' : 'border-white/10 hover:border-white/30'
+                                isSelected ? 'border-primary ring-2 ring-primary/20 scale-105' : 'border-outline hover:border-primary'
                               }`}
                               title={preset.name}
                             >
@@ -1128,7 +1128,7 @@ export default function DashboardView({
                   </div>
 
                   {/* Notification Switches */}
-                  <div className="space-y-3 pt-4 border-t border-white/5">
+                  <div className="space-y-3 pt-4 border-t border-outline-variant/50">
                     <h4 className="text-xs font-bold text-primary uppercase tracking-widest mb-2">Preferences</h4>
                     
                     <label className="flex items-center justify-between cursor-pointer group">

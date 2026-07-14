@@ -154,7 +154,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0e1a] text-on-surface font-sans antialiased overflow-x-hidden selection:bg-primary/30 selection:text-white">
+    <div className="min-h-screen bg-background text-on-surface font-sans antialiased overflow-x-hidden selection:bg-primary/20 selection:text-on-surface">
       {/* Dynamic ambient radial lighting effects */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[140px] pointer-events-none"></div>
       <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] bg-[#c8a0f0]/5 rounded-full blur-[180px] pointer-events-none"></div>
@@ -187,9 +187,9 @@ export default function App() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               transition={{ duration: 0.18 }}
-              className="relative z-10 glass-card p-5 rounded-2xl border border-white/10 shadow-2xl bg-[#0f1524]/85 text-on-surface"
+              className="relative z-10 glass-card p-5 rounded-2xl border border-outline-variant/60 shadow-xl bg-surface/90 text-on-surface"
             >
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/5">
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-outline-variant/50">
                 <span className="font-bold text-sm flex items-center gap-2">
                   <Bell className="w-4 h-4 text-primary" />
                   <span>Real-Time Notifications</span>
@@ -208,8 +208,8 @@ export default function App() {
                   <div
                     key={n.id}
                     onClick={() => handleNotificationClick(n)}
-                    className={`p-3 rounded-xl hover:bg-white/5 transition-all cursor-pointer border relative ${
-                      n.unread ? 'bg-primary/5 border-primary/20' : 'border-transparent bg-white/5/20'
+                    className={`p-3 rounded-xl hover:bg-surface-container transition-all cursor-pointer border relative ${
+                      n.unread ? 'bg-primary/5 border-primary/20' : 'border-outline-variant/40 bg-surface/30'
                     }`}
                   >
                     {n.unread && (
@@ -302,7 +302,7 @@ export default function App() {
       </main>
 
       {/* Global Minimalist Translucent Footer */}
-      <footer className="border-t border-white/5 py-12 px-6 mt-16 bg-[#0a0e1a]/80 backdrop-blur-md">
+      <footer className="border-t border-outline-variant py-12 px-6 mt-16 bg-surface/85 backdrop-blur-md">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
           
           <div className="flex flex-col">

@@ -117,7 +117,7 @@ export default function HomeView({
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="w-full max-w-2xl glass-card rounded-2xl p-2 flex items-center shadow-2xl mb-12 border-white/10 hover:border-primary/20 focus-within:border-primary/40 focus-within:ring-2 focus-within:ring-primary/15 transition-all duration-300"
+          className="w-full max-w-2xl glass-card rounded-2xl p-2 flex items-center shadow-2xl mb-12 border-outline-variant/60 hover:border-primary/20 focus-within:border-primary/40 focus-within:ring-2 focus-within:ring-primary/15 transition-all duration-300"
         >
           <div className="flex-1 flex items-center px-3">
             <Search className="text-primary mr-3 w-5 h-5 shrink-0" />
@@ -148,7 +148,7 @@ export default function HomeView({
             <button
               key={name}
               onClick={() => handleChipClick(name)}
-              className="flex items-center gap-2 px-5 py-3 rounded-full glass-card hover:bg-primary/10 hover:border-primary/30 text-on-surface hover:text-primary transition-all duration-300 group active:scale-95 text-sm font-semibold select-none border border-white/5"
+              className="flex items-center gap-2 px-5 py-3 rounded-full glass-card hover:bg-primary/10 hover:border-primary/30 text-on-surface hover:text-primary transition-all duration-300 group active:scale-95 text-sm font-semibold select-none border border-outline-variant/45"
             >
               <Icon className="w-4 h-4 text-on-surface-variant group-hover:text-primary transition-colors" />
               <span>{name}</span>
@@ -189,9 +189,9 @@ export default function HomeView({
               animate={{ opacity: 1, translateY: 0 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
               onClick={() => onSelectListing(listing)}
-              className="glass-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer border border-white/5 hover:border-primary/25 hover:shadow-[0_12px_40px_rgba(0,180,255,0.08)] transition-all duration-300"
+              className="glass-card rounded-2xl overflow-hidden flex flex-col group cursor-pointer border border-outline-variant/50 hover:border-primary/25 hover:shadow-[0_12px_40px_rgba(0,112,243,0.05)] transition-all duration-300"
             >
-              <div className="relative h-56 overflow-hidden bg-slate-900/40">
+              <div className="relative h-56 overflow-hidden bg-slate-100">
                 <img
                   alt={listing.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -234,7 +234,7 @@ export default function HomeView({
                 </p>
                 
                 {/* Price and Metadata Footer */}
-                <div className="mt-auto flex items-center justify-between pt-2 border-t border-white/5">
+                <div className="mt-auto flex items-center justify-between pt-2 border-t border-outline-variant/40">
                   <span className="text-lg font-black text-primary tracking-tight">
                     {formatPrice(listing.price)}
                   </span>

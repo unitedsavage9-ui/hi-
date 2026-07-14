@@ -304,7 +304,7 @@ export default function AddListingModal({
       {/* Tinted Overlay */}
       <div 
         onClick={onClose}
-        className="absolute inset-0 bg-[#0a0e1a]/85 backdrop-blur-md"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
       />
 
       {/* Modal Dialog */}
@@ -313,10 +313,10 @@ export default function AddListingModal({
         animate={{ opacity: 1, scale: 1, translateY: 0 }}
         exit={{ opacity: 0, scale: 0.95, translateY: 15 }}
         transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-        className="relative w-full max-w-2xl glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl z-10 flex flex-col bg-[#0f1524]/65 max-h-[90vh]"
+        className="relative w-full max-w-2xl glass-card rounded-2xl overflow-hidden border border-outline-variant/70 shadow-2xl z-10 flex flex-col bg-white/95 max-h-[90vh]"
       >
         {/* Header */}
-        <div className="p-6 border-b border-white/5 flex items-center justify-between">
+        <div className="p-6 border-b border-outline-variant/50 flex items-center justify-between">
           <div>
             <h3 className="text-lg font-black text-on-surface tracking-tight">
               {category === 'Jobs' ? 'Post a New Hiring Opportunity' : 'List New Premium Item'}
@@ -328,7 +328,7 @@ export default function AddListingModal({
           <button
             onClick={onClose}
             type="button"
-            className="w-8 h-8 rounded-full bg-background/50 hover:bg-primary/20 text-white hover:text-primary transition-colors flex items-center justify-center cursor-pointer"
+            className="w-8 h-8 rounded-full bg-surface-container hover:bg-primary/20 text-on-surface hover:text-primary transition-colors flex items-center justify-center cursor-pointer"
           >
             <X className="w-4.5 h-4.5" />
           </button>
@@ -455,7 +455,7 @@ export default function AddListingModal({
                       type="checkbox"
                       checked={showCoordinates}
                       onChange={(e) => setShowCoordinates(e.target.checked)}
-                      className="rounded bg-background/50 border-white/10 text-primary focus:ring-0 cursor-pointer"
+                      className="rounded bg-surface-container border-outline-variant text-primary focus:ring-0 cursor-pointer"
                     />
                     <span>Show on listing map</span>
                   </label>
@@ -469,7 +469,7 @@ export default function AddListingModal({
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="grid grid-cols-1 gap-4 pt-4 border-t border-white/5"
+              className="grid grid-cols-1 gap-4 pt-4 border-t border-outline-variant/50"
             >
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs text-primary font-bold uppercase tracking-wider">Hiring Company / Brand *</label>
@@ -515,7 +515,7 @@ export default function AddListingModal({
           </div>
 
           {/* Vendo Unified Media Hub */}
-          <div className="space-y-4 border-t border-white/5 pt-4">
+          <div className="space-y-4 border-t border-outline-variant/50 pt-4">
             <div className="flex justify-between items-center">
               <label className="text-xs text-primary font-black uppercase tracking-widest">
                 Vendo Media Hub
@@ -550,7 +550,7 @@ export default function AddListingModal({
                 />
                 <button
                   type="button"
-                  className="w-full h-full py-3 px-4 rounded-xl bg-white/5 border border-white/10 text-xs text-on-surface hover:bg-white/10 font-bold transition-all flex items-center justify-center gap-2"
+                  className="w-full h-full py-3 px-4 rounded-xl bg-surface-container border border-outline-variant text-xs text-on-surface hover:bg-outline-variant/40 font-bold transition-all flex items-center justify-center gap-2"
                 >
                   <Upload className="w-4 h-4 text-primary" />
                   <span>Upload Photos</span>
@@ -563,9 +563,9 @@ export default function AddListingModal({
               <motion.div 
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
-                className="bg-[#0a0e1a] rounded-xl border border-primary/20 p-3.5 space-y-3"
+                className="bg-black rounded-xl border border-primary/20 p-3.5 space-y-3"
               >
-                <div className="relative w-full h-48 rounded-lg overflow-hidden bg-black border border-white/5">
+                <div className="relative w-full h-48 rounded-lg overflow-hidden bg-black border border-outline-variant/30">
                   <video 
                     ref={videoRef} 
                     autoPlay 
@@ -623,7 +623,7 @@ export default function AddListingModal({
                   />
                   <button
                     type="button"
-                    className="w-full py-2 px-3 rounded-lg bg-white/5 border border-white/5 text-[11px] text-on-surface-variant/80 hover:bg-white/10 font-bold transition-all flex items-center gap-2 justify-center"
+                    className="w-full py-2 px-3 rounded-lg bg-surface-container border border-outline-variant text-[11px] text-on-surface-variant/80 hover:bg-outline-variant/40 font-bold transition-all flex items-center gap-2 justify-center"
                   >
                     <Video className="w-3.5 h-3.5 text-primary" />
                     <span>Choose short video file...</span>
@@ -634,14 +634,14 @@ export default function AddListingModal({
 
             {/* Display Captured/Uploaded Media Elements Grid */}
             {(capturedPhotos.length > 0 || videoBlobUrl) && (
-              <div className="bg-[#0f1524]/40 border border-white/5 rounded-xl p-3 space-y-3">
+              <div className="bg-surface-container border border-outline-variant/50 rounded-xl p-3 space-y-3">
                 <p className="text-[10px] font-black uppercase text-primary tracking-widest">
                   Attached Attachments ({capturedPhotos.length} Images {videoBlobUrl ? '+ 1 Video' : ''})
                 </p>
                 <div className="flex flex-wrap gap-2.5">
                   {/* Images List */}
                   {capturedPhotos.map((photo, idx) => (
-                    <div key={idx} className="relative w-16 h-16 rounded-lg overflow-hidden border border-white/10 group">
+                    <div key={idx} className="relative w-16 h-16 rounded-lg overflow-hidden border border-outline-variant group">
                       <img src={photo} alt={`Captured ${idx}`} className="w-full h-full object-cover" />
                       <button
                         type="button"
@@ -688,7 +688,7 @@ export default function AddListingModal({
 
             {/* Fallback presets & custom URL for items (collapsed inside stock image choices) */}
             {capturedPhotos.length === 0 && (
-              <div className="space-y-3 bg-[#0a0e1a]/30 rounded-xl p-3 border border-white/5">
+              <div className="space-y-3 bg-surface-container border border-outline-variant rounded-xl p-3">
                 <div className="flex justify-between items-center">
                   <span className="text-[11px] text-on-surface-variant/80 font-black uppercase tracking-wider">
                     Or Choose Stock Preset:
@@ -707,7 +707,7 @@ export default function AddListingModal({
                           setImageUrl('');
                         }}
                         className={`h-11 rounded-lg overflow-hidden border-2 transition-all relative ${
-                          active ? 'border-primary scale-105' : 'border-white/5 opacity-55 hover:opacity-100'
+                          active ? 'border-primary scale-105' : 'border-outline-variant/50 opacity-55 hover:opacity-100'
                         }`}
                       >
                         <img src={activePresets[key]} alt={key} className="w-full h-full object-cover" />
@@ -730,7 +730,7 @@ export default function AddListingModal({
                       value={imageUrl}
                       onChange={(e) => setImageUrl(e.target.value)}
                       placeholder="https://images.unsplash.com/..."
-                      className="w-full bg-[#0a0e1a]/40 border border-outline-variant/40 rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary/20"
+                      className="w-full bg-surface-container/60 border border-outline-variant/40 rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-on-surface focus:outline-none focus:ring-1 focus:ring-primary/20"
                     />
                   </div>
                 </div>
@@ -739,8 +739,8 @@ export default function AddListingModal({
           </div>
 
           {/* Preview Panel */}
-          <div className="bg-[#0f1524]/40 border border-primary/10 rounded-xl p-4 flex gap-4 items-center">
-            <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-white/10">
+          <div className="bg-surface-container/50 border border-primary/10 rounded-xl p-4 flex gap-4 items-center">
+            <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-outline-variant/50">
               <img src={getActiveImage()} alt="Active Preview" className="w-full h-full object-cover" />
             </div>
             <div>
@@ -751,17 +751,17 @@ export default function AddListingModal({
             </div>
           </div>
 
-          <div className="flex gap-3 justify-end pt-4 border-t border-white/5">
+          <div className="flex gap-3 justify-end pt-4 border-t border-outline-variant/50">
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-on-surface font-semibold rounded-xl text-sm transition-all cursor-pointer"
+              className="px-5 py-2.5 bg-surface-container hover:bg-outline-variant/50 text-on-surface font-semibold rounded-xl text-sm transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 bg-primary hover:brightness-110 text-background font-black rounded-xl text-sm transition-all shadow-[0_0_15px_rgba(0,180,255,0.25)] flex items-center gap-1.5 active:scale-95 cursor-pointer"
+              className="px-6 py-2.5 bg-primary hover:brightness-110 text-background font-black rounded-xl text-sm transition-all shadow-[0_2px_15px_rgba(0,112,243,0.2)] flex items-center gap-1.5 active:scale-95 cursor-pointer"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>Publish Listing</span>

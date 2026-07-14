@@ -44,7 +44,7 @@ export default function TopNavBar({
   };
 
   return (
-    <header className="glass-nav sticky top-0 z-50 w-full border-b border-white/10">
+    <header className="glass-nav sticky top-0 z-50 w-full border-b border-outline-variant">
       <nav className="flex items-center justify-between px-6 py-3 w-full max-w-7xl mx-auto">
         {/* Left Section: Logo & Main Navigation */}
         <div className="flex items-center gap-12">
@@ -101,7 +101,7 @@ export default function TopNavBar({
                 setView('search');
               }}
               title="Location"
-              className="p-2 text-on-surface-variant hover:text-primary hover:bg-white/5 rounded-full transition-all duration-200 active:scale-95"
+              className="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-full transition-all duration-200 active:scale-95"
             >
               <MapPin className="w-5 h-5" />
             </button>
@@ -109,16 +109,16 @@ export default function TopNavBar({
             <button 
               onClick={onOpenNotifications}
               title="Notifications"
-              className="p-2 text-on-surface-variant hover:text-primary hover:bg-white/5 rounded-full transition-all duration-200 relative active:scale-95"
+              className="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-full transition-all duration-200 relative active:scale-95"
             >
               <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border border-[#0f1524] shadow-[0_0_8px_#00b4ff]"></span>
+              <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border border-surface shadow-[0_0_8px_#0070f3]"></span>
             </button>
             
             <button 
               onClick={onOpenChat}
               title="Messages"
-              className="p-2 text-on-surface-variant hover:text-primary hover:bg-white/5 rounded-full transition-all duration-200 active:scale-95"
+              className="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-full transition-all duration-200 active:scale-95"
             >
               <MessageSquare className="w-5 h-5" />
             </button>

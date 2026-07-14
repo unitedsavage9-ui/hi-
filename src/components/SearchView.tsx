@@ -158,8 +158,8 @@ export default function SearchView({
         {/* Left Sidebar Filters */}
         <aside className="w-full lg:w-72 shrink-0">
           <div className="sticky top-24 space-y-6">
-            <div className="glass-card p-6 rounded-2xl border border-white/5 shadow-2xl">
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+            <div className="glass-card p-6 rounded-2xl border border-outline-variant/60 shadow-xl">
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-outline-variant/50">
                 <h3 className="text-lg font-black text-on-surface tracking-tight flex items-center gap-2">
                   <SlidersHorizontal className="w-4 h-4 text-primary" />
                   <span>Filters</span>
@@ -353,8 +353,8 @@ export default function SearchView({
                         onClick={() => setCondition(cond)}
                         className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 cursor-pointer ${
                           isActive 
-                            ? 'bg-primary text-background shadow-[0_0_10px_rgba(0,180,255,0.35)] font-bold' 
-                            : 'bg-surface-container/60 hover:bg-outline-variant/50 text-on-surface-variant hover:text-on-surface border border-white/5'
+                            ? 'bg-primary text-background shadow-[0_2px_10px_rgba(0,112,243,0.25)] font-bold' 
+                            : 'bg-surface-container/60 hover:bg-outline-variant/50 text-on-surface-variant hover:text-on-surface border border-outline-variant/40'
                         }`}
                       >
                         {cond}
@@ -429,12 +429,12 @@ export default function SearchView({
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
               >
                 {[1, 2, 3, 4, 5, 6].map((idx) => (
-                  <div key={idx} className="glass-card rounded-2xl overflow-hidden p-1 border border-white/5">
+                  <div key={idx} className="glass-card rounded-2xl overflow-hidden p-1 border border-outline-variant/50">
                     <div className="skeleton h-48 w-full rounded-xl mb-4"></div>
                     <div className="p-3 space-y-3">
                       <div className="skeleton h-5 w-3/4 rounded"></div>
                       <div className="skeleton h-3.5 w-1/2 rounded"></div>
-                      <div className="flex justify-between items-center pt-2 border-t border-white/5">
+                      <div className="flex justify-between items-center pt-2 border-t border-outline-variant/40">
                         <div className="skeleton h-6 w-20 rounded"></div>
                         <div className="skeleton h-3.5 w-16 rounded"></div>
                       </div>
@@ -447,7 +447,7 @@ export default function SearchView({
                 key="empty-state"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="glass-card p-12 rounded-2xl text-center border border-white/5 shadow-xl max-w-lg mx-auto mt-12"
+                className="glass-card p-12 rounded-2xl text-center border border-outline-variant/50 shadow-xl max-w-lg mx-auto mt-12"
               >
                 <p className="text-lg font-bold text-on-surface mb-2">No matching items found</p>
                 <p className="text-sm text-on-surface-variant mb-6">
@@ -472,9 +472,9 @@ export default function SearchView({
                   <div
                     key={item.id}
                     onClick={() => onSelectListing(item)}
-                    className="glass-card rounded-2xl overflow-hidden p-1.5 group hover:scale-[1.01] hover:border-primary/25 border border-white/5 hover:shadow-[0_12px_40px_rgba(0,180,255,0.08)] transition-all duration-300 cursor-pointer flex flex-col"
+                    className="glass-card rounded-2xl overflow-hidden p-1.5 group hover:scale-[1.01] hover:border-primary/25 border border-outline-variant/50 hover:shadow-[0_12px_40px_rgba(0,112,243,0.05)] transition-all duration-300 cursor-pointer flex flex-col"
                   >
-                    <div className="relative h-48 w-full rounded-xl overflow-hidden bg-slate-900/40">
+                    <div className="relative h-48 w-full rounded-xl overflow-hidden bg-slate-100">
                       <img 
                         src={item.image} 
                         alt={item.title} 
@@ -489,7 +489,7 @@ export default function SearchView({
                         className={`absolute top-2.5 right-2.5 p-2 rounded-full backdrop-blur-md transition-colors shadow ${
                           item.isFavorite 
                             ? 'bg-primary text-background hover:brightness-110' 
-                            : 'bg-background/40 text-white hover:bg-primary hover:text-background'
+                            : 'bg-black/25 text-white hover:bg-primary hover:text-background'
                         }`}
                       >
                         <Heart className={`w-4 h-4 ${item.isFavorite ? 'fill-current' : ''}`} />
@@ -508,7 +508,7 @@ export default function SearchView({
                         <span>{item.location}</span>
                       </div>
 
-                      <div className="flex justify-between items-end mt-auto pt-3 border-t border-white/5">
+                      <div className="flex justify-between items-end mt-auto pt-3 border-t border-outline-variant/40">
                         <div className="flex flex-col">
                           <span className="text-primary font-black text-lg tracking-tight">
                             {formatPrice(item.price)}

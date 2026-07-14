@@ -66,7 +66,7 @@ export default function ListingDetailsModal({
       {/* Blurred Tinted Backdrop */}
       <div 
         onClick={onClose}
-        className="absolute inset-0 bg-[#0a0e1a]/85 backdrop-blur-md transition-opacity duration-300"
+        className="absolute inset-0 bg-black/85 backdrop-blur-md transition-opacity duration-300"
       />
 
       {/* Modal Container */}
@@ -75,12 +75,12 @@ export default function ListingDetailsModal({
         animate={{ opacity: 1, scale: 1, translateY: 0 }}
         exit={{ opacity: 0, scale: 0.95, translateY: 15 }}
         transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-        className="relative w-full max-w-4xl glass-card rounded-2xl overflow-hidden border border-white/10 shadow-2xl z-10 flex flex-col md:flex-row bg-[#0f1524]/65 max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible scrollbar-hide"
+        className="relative w-full max-w-4xl glass-card rounded-2xl overflow-hidden border border-outline-variant/70 shadow-2xl z-10 flex flex-col md:flex-row bg-white/95 max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible scrollbar-hide"
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-background/50 hover:bg-primary/20 text-white hover:text-primary transition-colors flex items-center justify-center"
+          className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/30 hover:bg-primary/20 text-white hover:text-primary transition-colors flex items-center justify-center"
         >
           <X className="w-4.5 h-4.5" />
         </button>
@@ -111,7 +111,7 @@ export default function ListingDetailsModal({
                 className="w-full h-full object-cover absolute inset-0 transition-all duration-300"
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a]/95 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-transparent to-transparent pointer-events-none" />
           </div>
 
           {/* Top Floating items - navigation or controls */}
@@ -169,7 +169,7 @@ export default function ListingDetailsModal({
                       setIsPlayingVideo(false);
                     }}
                     className={`w-12 h-12 rounded-lg overflow-hidden border-2 shrink-0 transition-all cursor-pointer ${
-                      idx === activeMediaIndex ? 'border-primary ring-2 ring-primary/20 scale-105' : 'border-white/10 hover:border-white/30'
+                      idx === activeMediaIndex ? 'border-primary ring-2 ring-primary/20 scale-105' : 'border-outline hover:border-primary'
                     }`}
                   >
                     <img src={imgUrl} alt={`Thumbnail ${idx}`} className="w-full h-full object-cover" />
@@ -189,7 +189,7 @@ export default function ListingDetailsModal({
                 className={`p-2.5 rounded-full backdrop-blur-md transition-all shadow cursor-pointer ${
                   listing.isFavorite 
                     ? 'bg-red-500 text-white hover:bg-red-600 scale-110' 
-                    : 'bg-background/45 text-white/80 hover:text-white hover:bg-background/80 hover:scale-105'
+                    : 'bg-black/35 text-white/80 hover:text-white hover:bg-black/50 hover:scale-105'
                 }`}
               >
                 <Heart className={`w-4 h-4 ${listing.isFavorite ? 'fill-current' : ''}`} />
@@ -199,11 +199,11 @@ export default function ListingDetailsModal({
         </div>
 
         {/* Right pane: Product detail metadata */}
-        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between h-full bg-[#0f1524]/20">
+        <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between h-full bg-surface-container/10">
           <div>
             {/* Category / Condition tags */}
             <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="bg-white/5 border border-white/5 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md text-on-surface-variant">
+              <span className="bg-surface-container border border-outline-variant/60 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md text-on-surface-variant">
                 {listing.category}
               </span>
               {listing.category === 'Jobs' ? (
@@ -237,7 +237,7 @@ export default function ListingDetailsModal({
             </h2>
 
             {/* Price/Salary tag */}
-            <div className="flex items-baseline gap-2 mb-4 pb-4 border-b border-white/5">
+            <div className="flex items-baseline gap-2 mb-4 pb-4 border-b border-outline-variant/40">
               <span className="text-2xl font-black text-primary tracking-tight">
                 {formatPrice(listing.price)}
               </span>
@@ -247,7 +247,7 @@ export default function ListingDetailsModal({
             </div>
 
             {/* Location */}
-            <div className="flex items-center gap-2 text-sm text-on-surface-variant mb-6 bg-white/5 rounded-xl px-4 py-3 border border-white/5">
+            <div className="flex items-center gap-2 text-sm text-on-surface-variant mb-6 bg-surface-container/60 rounded-xl px-4 py-3 border border-outline-variant/40">
               <MapPin className="w-4 h-4 text-primary" />
               <div>
                 <p className="font-bold text-on-surface text-xs">
@@ -272,7 +272,7 @@ export default function ListingDetailsModal({
               </div>
 
               {listing.category === 'Jobs' && listing.jobRequirements && (
-                <div className="bg-[#0f1524]/60 border border-primary/10 rounded-xl p-4 space-y-2">
+                <div className="bg-surface-container/50 border border-primary/10 rounded-xl p-4 space-y-2">
                   <h5 className="text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-1.5">
                     <Award className="w-3.5 h-3.5 text-primary" />
                     <span>Job Requirements & Skills</span>
@@ -290,7 +290,7 @@ export default function ListingDetailsModal({
 
           {/* Buyer-Seller Inquiry panel */}
           {listing.owner !== 'user' ? (
-            <div className="border-t border-white/5 pt-6 space-y-4">
+            <div className="border-t border-outline-variant/40 pt-6 space-y-4">
               <h4 className="text-xs font-bold text-primary uppercase tracking-widest flex items-center gap-2">
                 <MessageSquare className="w-3.5 h-3.5" />
                 <span>
@@ -304,7 +304,7 @@ export default function ListingDetailsModal({
                   value={inquiryText}
                   onChange={(e) => setInquiryText(e.target.value)}
                   placeholder={listing.category === 'Jobs' ? 'Introduce yourself, attach resume/portfolio links...' : 'Ask seller if available, offer prices...'}
-                  className="flex-1 bg-background/50 border border-outline-variant/40 rounded-xl px-4 py-2.5 text-xs text-on-surface placeholder:text-on-surface-variant/30 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                  className="flex-1 bg-surface-container/50 border border-outline-variant/40 rounded-xl px-4 py-2.5 text-xs text-on-surface placeholder:text-on-surface-variant/30 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 />
                 <button
                   type="submit"
@@ -316,7 +316,7 @@ export default function ListingDetailsModal({
               </form>
             </div>
           ) : (
-            <div className="border-t border-white/5 pt-6 flex items-center justify-between text-xs text-on-surface-variant/70">
+            <div className="border-t border-outline-variant/40 pt-6 flex items-center justify-between text-xs text-on-surface-variant/70">
               <span className="flex items-center gap-1.5 font-semibold">
                 <ShieldCheck className="text-emerald-400 w-4 h-4" />
                 <span>This is your active listing</span>
